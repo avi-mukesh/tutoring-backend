@@ -14,7 +14,7 @@ app.use(
     origin: [
       "http://localhost:3001",
       "https://mukeshacademy.com",
-      "https://tutor.avimukesh.com/",
+      "https://tutor.avimukesh.com",
     ],
   })
 );
