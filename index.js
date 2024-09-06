@@ -25,6 +25,10 @@ app.get("/", (req, res) => {
 
 app.post("/send-email", (req, res) => {
   const { name, email, message } = req.body;
+
+  if (name.length === 0 || email.length === 0 || message.length === 0)
+    return res.status(400).send({ message: "Please provide all fields." });
+
   var transport = nodemailer.createTransport({
     host: "live.smtp.mailtrap.io",
     port: 587,
@@ -38,7 +42,11 @@ app.post("/send-email", (req, res) => {
     from: "enquiries@mukeshacademy.com",
     to: "avimukesh10@gmail.com",
     subject: `Tutoring Enquiry ${name}`,
-    text: message,
+    text: `
+        Name: ${name}
+        Email: ${email}
+        Message: ${message}
+    `,
   };
 
   // Send the email
@@ -58,7 +66,7 @@ app.post("/send-email", (req, res) => {
     }
   });
 
-  res.send("Email sent");
+  res.status(200).send({ message: "Email sent" });
 });
 
 app.listen(PORT, () => {
